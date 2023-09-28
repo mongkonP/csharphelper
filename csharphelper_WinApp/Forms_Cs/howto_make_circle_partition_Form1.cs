@@ -1,0 +1,209 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Drawing.Drawing2D;
+
+ 
+
+using howto_make_circle_partition;
+namespace csharphelper_WinApp.Forms_Cs 
+    {
+     public partial class howto_make_circle_partition_Form1:Form
+  { 
+
+
+        public howto_make_circle_partition_Form1()
+        {
+            InitializeComponent();
+        }
+
+        // The circles.
+        List<PointF> Centers = new List<PointF>();
+        List<float> Radii = new List<float>();
+
+        // The index of a new circle we are drawing.
+        int NewCircle = -1;
+
+        // Remove all circles.
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            Centers = new List<PointF>();
+            Radii = new List<float>();
+
+            this.Invalidate();
+        }
+
+        // Draw the circles.
+        private void howto_make_circle_partition_Form1_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            // See if we are currently drawing a new circle.
+            if (NewCircle < 0)
+            {
+                // We are not drawing a new circle.
+                // Draw the regions.
+                // Find the RegionInfos for the circles.
+                List<RegionInfo> regioninfos = new List<RegionInfo>();
+                for (int i = 0; i < Centers.Count; i++)
+                {
+                    // Make a RegionInfo for this circle.
+                    RegionInfo new_regioninfo =
+                        new RegionInfo(1, Centers[i], Radii[i]);
+
+                    // Make intersections between the new RegionInfo
+                    // and other RegionInfos already on the list.
+                    new_regioninfo.MakeIntersections(e.Graphics, regioninfos);
+
+                    // Add the new RegionInfo to the list.
+                    regioninfos.Add(new_regioninfo);
+                }
+
+                // Find the largest RegionInfo.Count.
+                int max_count = 0;
+                foreach (RegionInfo regioninfo in regioninfos)
+                {
+                    if (max_count < regioninfo.Count)
+                    {
+                        max_count = regioninfo.Count;
+                    }
+                }
+
+                // Draw the RegionInfos.
+                foreach (RegionInfo regioninfo in regioninfos)
+                {
+                    regioninfo.Draw(e.Graphics, this.Font, max_count);
+                }
+            }
+
+            // Draw the circles.
+            for (int i = 0; i < Centers.Count; i++)
+            {
+                e.Graphics.DrawEllipse(Pens.Blue,
+                    Centers[i].X - Radii[i], Centers[i].Y - Radii[i],
+                    2 * Radii[i], 2 * Radii[i]);
+            }
+        }
+
+        // Start drawing a new circle.
+        private void howto_make_circle_partition_Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            Centers.Add(e.Location);
+            Radii.Add(0);
+            NewCircle = Centers.Count - 1;
+        }
+
+        // Update the new circle.
+        private void howto_make_circle_partition_Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (NewCircle < 0) return;
+            float dx = e.X - Centers[NewCircle].X;
+            float dy = e.Y - Centers[NewCircle].Y;
+            Radii[NewCircle] = (float)Math.Sqrt(dx * dx + dy * dy);
+            this.Invalidate();
+        }
+
+        // Finish drawing a new circle.
+        private void howto_make_circle_partition_Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            // If the radius is 0, remove the new circle.
+            if (Radii[NewCircle] < 1)
+            {
+                Centers.RemoveAt(NewCircle);
+                Radii.RemoveAt(NewCircle);
+            }
+
+            NewCircle = -1;
+            this.Invalidate();
+        }
+
+        // Find the intersection of all of the circles.
+        private Region FindCircleIntersections(List<PointF> centers, List<float> radii)
+        {
+            if (centers.Count < 1) return null;
+
+            // Make a region.
+            Region result_region = new Region();
+
+            // Intersect the region with the circles.
+            for (int i = 0; i < centers.Count; i++)
+            {
+                using (GraphicsPath circle_path = new GraphicsPath())
+                {
+                    circle_path.AddEllipse(
+                        centers[i].X - radii[i], centers[i].Y - radii[i],
+                        2 * radii[i], 2 * radii[i]);
+                    result_region.Intersect(circle_path);
+                }
+            }
+
+            return result_region;
+        }
+    
+
+/// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.btnClear = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(12, 12);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 1;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // howto_make_circle_partition_Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(334, 261);
+            this.Controls.Add(this.btnClear);
+            this.Name = "howto_make_circle_partition_Form1";
+            this.Text = "howto_make_circle_partition";
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.howto_make_circle_partition_Form1_MouseUp);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.howto_make_circle_partition_Form1_Paint);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.howto_make_circle_partition_Form1_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.howto_make_circle_partition_Form1_MouseMove);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Button btnClear;
+    }
+}
+

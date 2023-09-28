@@ -1,0 +1,41 @@
+<Window x:Class="csharphelper.Windows_Cs.howto_wpf_load_treeview_from_xml_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="howto_wpf_load_treeview_from_xml"
+    Height="300" Width="300">
+    <Window.Resources>
+        <XmlDataProvider x:Key="food_provider" Source="foods.xml" XPath="/*" />
+
+        <HierarchicalDataTemplate x:Key="NodeTemplate"
+            ItemsSource="{Binding XPath=./*}">
+            <TextBlock x:Name="nodetext"/>
+            <HierarchicalDataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=NodeType}" Value="Element">
+                    <Setter TargetName="nodetext" Property="Text"
+                        Value="{Binding Path=Name}" />
+                </DataTrigger>
+            </HierarchicalDataTemplate.Triggers>
+        </HierarchicalDataTemplate>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource food_provider}" Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TreeView Name="trvItems" Grid.Row="0"
+            ItemTemplate="{StaticResource NodeTemplate}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            ItemsSource="{Binding}"
+            VirtualizingStackPanel.IsVirtualizing="False"
+            VirtualizingStackPanel.VirtualizationMode="Standard" />
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+            <Button Name="btnLoadFlowers" Grid.Row="1" Margin="4"
+                Content="Load Flowers" Width="100" Click="btnLoadFlowers_Click" />
+            <Button Name="btnLoadCars" Grid.Row="1" Margin="4"
+                Content="Load Cars" Width="100" Click="btnLoadCars_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,271 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
+
+ 
+
+using howto_scrolling_family_tree;
+namespace csharphelper_WinApp.Forms_Cs 
+    {
+     public partial class howto_scrolling_family_tree_Form1:Form
+  { 
+
+
+        public howto_scrolling_family_tree_Form1()
+        {
+            InitializeComponent();
+        }
+
+        // The root node.
+        private TreeNode<PictureNode> root =
+            new TreeNode<PictureNode>(
+                new PictureNode("Queen Elizabeth II && Prince Philip Duke of Edinburgh",
+                    Properties.Resources.Elizabeth_Philip));
+
+        // Make a tree.
+        private void howto_scrolling_family_tree_Form1_Load(object sender, EventArgs e)
+        {
+            TreeNode<PictureNode> charles =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Prince Charles, Prince of Wales",
+                        Properties.Resources.Charles));
+            TreeNode<PictureNode> anne =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Princess Anne",
+                        Properties.Resources.Anne));
+            TreeNode<PictureNode> andrew =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Prince Andrew, Duke of York",
+                        Properties.Resources.Andrew));
+            TreeNode<PictureNode> edward =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Prince Edward, Earl of Wessex",
+                        Properties.Resources.Edward));
+            TreeNode<PictureNode> william =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Prince William",
+                        Properties.Resources.William));
+            TreeNode<PictureNode> harry =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Prince Henry (Harry)",
+                        Properties.Resources.Harry));
+            TreeNode<PictureNode> peter =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Peter Phillips",
+                        Properties.Resources.Peter));
+            TreeNode<PictureNode> zara =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Zara Phillips",
+                        Properties.Resources.Zara));
+            TreeNode<PictureNode> beatrice =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Princess Beatrice",
+                        Properties.Resources.Beatrice));
+            TreeNode<PictureNode> eugenie =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Princess Eugenie",
+                        Properties.Resources.Eugenie));
+            TreeNode<PictureNode> louise =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Lady Louise",
+                        Properties.Resources.Louise));
+            TreeNode<PictureNode> severn =
+                new TreeNode<PictureNode>(
+                    new PictureNode("Viscount Severn",
+                        Properties.Resources.Severn));
+
+            root.AddChild(charles);
+            charles.AddChild(william);
+            charles.AddChild(harry);
+            root.AddChild(anne);
+            anne.AddChild(peter);
+            anne.AddChild(zara);
+            root.AddChild(andrew);
+            andrew.AddChild(beatrice);
+            andrew.AddChild(eugenie);
+            root.AddChild(edward);
+            edward.AddChild(louise);
+            edward.AddChild(severn);
+
+            // Make the Panel display scroll bars if needed.
+            panScroller.AutoScroll = true;
+
+            // Draw the tree into a Bitmap and
+            // display the result in the PictureBox.
+            picTree.Location = new Point(0, 0);
+            picTree.SizeMode = PictureBoxSizeMode.AutoSize;
+            picTree.Image = DrawTree(root, 5);
+        }
+
+        // Draw the tree on a Bitmap sized to fit.
+        private Bitmap DrawTree(TreeNode<PictureNode> root, int margin)
+        {
+            float xmin = margin, ymin = margin;
+
+            // Make a small bitmap so we can use its graphics handle.
+            using (Bitmap bm = new Bitmap(10, 10))
+            {
+                using (Graphics gr = Graphics.FromImage(bm))
+                {
+                    // Arrange the tree to see how big it is.
+                    root.Arrange(gr, ref xmin, ref ymin);
+                }
+            }
+
+            // Make the result bitmap.
+            int wid = (int)xmin + margin;
+            int hgt = (int)ymin + margin;
+            Bitmap result_bm = new Bitmap(wid, hgt);
+            using (Graphics gr = Graphics.FromImage(result_bm))
+            {
+                // Draw the tree.
+                gr.SmoothingMode = SmoothingMode.AntiAlias;
+                gr.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                root.DrawTree(gr);
+            }
+
+            return result_bm;
+        }
+
+        // The currently selected node.
+        private TreeNode<PictureNode> SelectedNode;
+
+        private void picTree_MouseClick(object sender, MouseEventArgs e)
+        {
+            FindNodeUnderMouse(e.Location);
+        }
+
+        // Set SelectedNode to the node under the mouse.
+        private void FindNodeUnderMouse(PointF pt)
+        {
+            // Deselect the previously selected node.
+            if (SelectedNode != null)
+            {
+                SelectedNode.Data.Selected = false;
+                lblNodeText.Text = "";
+            }
+
+            // Find the node at this position (if any).
+            using (Graphics gr = picTree.CreateGraphics())
+            {
+                SelectedNode = root.NodeAtPoint(gr, pt);
+            }
+
+            // Select the node.
+            if (SelectedNode != null)
+            {
+                SelectedNode.Data.Selected = true;
+                lblNodeText.Text = SelectedNode.Data.Description;
+            }
+
+            // Redraw.
+            picTree.Refresh();
+        }
+    
+
+/// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.picTree = new System.Windows.Forms.PictureBox();
+            this.panScroller = new System.Windows.Forms.Panel();
+            this.lblNodeText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            ((System.ComponentModel.ISupportInitialize)(this.picTree)).BeginInit();
+            this.panScroller.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // picTree
+            // 
+            this.picTree.BackColor = System.Drawing.Color.LightGray;
+            this.picTree.Location = new System.Drawing.Point(3, 3);
+            this.picTree.Name = "picTree";
+            this.picTree.Size = new System.Drawing.Size(106, 98);
+            this.picTree.TabIndex = 8;
+            this.picTree.TabStop = false;
+            this.picTree.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picTree_MouseClick);
+            // 
+            // panScroller
+            // 
+            this.panScroller.AutoScroll = true;
+            this.panScroller.Controls.Add(this.picTree);
+            this.panScroller.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panScroller.Location = new System.Drawing.Point(0, 0);
+            this.panScroller.Name = "panScroller";
+            this.panScroller.Size = new System.Drawing.Size(384, 239);
+            this.panScroller.TabIndex = 11;
+            // 
+            // lblNodeText
+            // 
+            this.lblNodeText.Name = "lblNodeText";
+            this.lblNodeText.Size = new System.Drawing.Size(0, 17);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblNodeText});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 239);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(384, 22);
+            this.statusStrip1.TabIndex = 10;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // howto_scrolling_family_tree_Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(384, 261);
+            this.Controls.Add(this.panScroller);
+            this.Controls.Add(this.statusStrip1);
+            this.Name = "howto_scrolling_family_tree_Form1";
+            this.Text = "howto_scrolling_family_tree";
+            this.Load += new System.EventHandler(this.howto_scrolling_family_tree_Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.picTree)).EndInit();
+            this.panScroller.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.PictureBox picTree;
+        private System.Windows.Forms.Panel panScroller;
+        private System.Windows.Forms.ToolStripStatusLabel lblNodeText;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+    }
+}
+

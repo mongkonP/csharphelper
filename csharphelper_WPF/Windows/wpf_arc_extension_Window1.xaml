@@ -1,0 +1,10 @@
+<Window x:Class="csharphelper.Windows_Cs.wpf_arc_extension_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="wpf_arc_extension"
+    Height="300" Width="300"
+    Loaded="Window_Loaded">
+    <Grid>
+        <Canvas Name="canDrawing" />
+    </Grid>
+</Window>

@@ -1,0 +1,60 @@
+<Window x:Class="csharphelper.Windows_Cs.howto_path_animation_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="howto_path_animation" Height="300" Width="300">
+    <Canvas>
+        <Path Stroke="Red" StrokeThickness="3">
+            <Path.Data>
+                <PathGeometry Figures=
+                    "M 50,110
+                     C 50,20 150,20 150,110
+                       150,250 250,250 250,160
+                       250,60 50,210 50,110"/>
+            </Path.Data>
+        </Path>
+        
+        <Rectangle Width="50" Height="30" Fill="LightBlue" Stroke="Blue">
+            <!-- We animate the following transformation
+                 to move the rectangle. Initially it's
+                 just an identity transformation. -->
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform X="-25" Y="-30"/>
+                    <MatrixTransform x:Name="rectangleTransform">
+                        <MatrixTransform.Matrix >
+                            <Matrix />
+                        </MatrixTransform.Matrix>
+                    </MatrixTransform>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+            
+            <!-- The Rectangle.Loaded event makes the storyboard start. -->
+            <Rectangle.Triggers>
+                <EventTrigger RoutedEvent="Rectangle.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <!-- Add AutoReverse="True" to the following
+                                 MatrixAnimationUsingPath to make the
+                                 shape reverse.
+                            -->
+                            <MatrixAnimationUsingPath
+                                Storyboard.TargetName="rectangleTransform"
+                                Storyboard.TargetProperty="Matrix"
+                                DoesRotateWithTangent="True"
+                                Duration="00:00:10" 
+                                RepeatBehavior="Forever" >
+                                <MatrixAnimationUsingPath.PathGeometry>
+                                    <PathGeometry Figures=
+                                        "M 50,110
+                                         C 50,20 150,20 150,110
+                                           150,250 250,250 250,160
+                                           250,60 50,210 50,110"/>
+                                </MatrixAnimationUsingPath.PathGeometry>
+                            </MatrixAnimationUsingPath>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Rectangle.Triggers>
+        </Rectangle>
+    </Canvas>
+</Window>

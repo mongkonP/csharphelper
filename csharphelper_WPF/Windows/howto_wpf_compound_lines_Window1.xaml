@@ -1,0 +1,20 @@
+<Window x:Class="csharphelper.Windows_Cs.howto_wpf_compound_lines_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="howto_wpf_compound_lines"
+    Height="300" Width="320">
+    <Grid Name="grdMain">
+        <Path Stroke="Black" StrokeThickness="20" Name="scribblePath">
+            <Path.Data>
+                <PathGeometry x:Name="scribbleGeometry"
+                    Figures="M 20,20 C 200,0 0,200 40,60
+                    L 150,30 C 60,200 200,150 200,60
+                    M 70,140 L 150,240 180,170 30,200
+                    M 270,70 L 270,230 200,200 Z"/>
+            </Path.Data>
+        </Path>
+        <Button HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            Height="23" Width="75" Margin="5" IsDefault="True"
+            Name="btnGo" Content="Go" Click="btnGo_Click"/>
+    </Grid>
+</Window>

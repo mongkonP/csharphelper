@@ -1,0 +1,69 @@
+<Window x:Class="csharphelper.Windows_Cs.howto_wpf_standard_commands_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:howto_wpf_standard_commands"
+    Title="howto_wpf_standard_commands"
+    Height="170" Width="400" Loaded="Window_Loaded">
+
+    <!-- Either use code to bind the commands or use the following. -->
+    <Window.CommandBindings>
+        <CommandBinding
+            Command="ApplicationCommands.Open"
+            Executed="OpenBinding_Executed"
+            CanExecute="OpenBinding_CanExecute"/>
+    </Window.CommandBindings>
+    <DockPanel LastChildFill="True">
+        <DockPanel.Resources>
+            <Style TargetType="MenuItem">
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Width" Value="120"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5"/>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </DockPanel.Resources>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Document">
+                <MenuItem Header="New" Command="ApplicationCommands.New"/>
+                <MenuItem Header="Open" Command="ApplicationCommands.Open"/>
+            </MenuItem>
+        </Menu>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0"
+                Content="New Document" Command="ApplicationCommands.New"/>
+            <Button Grid.Row="1" Grid.Column="0"
+                Content="Make New" Command="ApplicationCommands.New"/>
+            <CheckBox Grid.Row="2" Grid.Column="0"
+                Name="chkAllowNew" Content="Allow New"
+                HorizontalAlignment="Center"/>
+
+            <Button Grid.Row="0" Grid.Column="1"
+                Content="Open Document" Command="ApplicationCommands.Open"/>
+            <Button Grid.Row="1" Grid.Column="1"
+                Content="Open" Command="ApplicationCommands.Open"/>
+            <CheckBox Grid.Row="2" Grid.Column="1"
+                Name="chkAllowOpen" Content="Allow Open"
+                HorizontalAlignment="Center"/>
+        </Grid>
+    </DockPanel>
+</Window>

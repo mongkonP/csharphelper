@@ -1,0 +1,23 @@
+<Items>
+  <Food>
+    <Vegetables Text="All Kinds\nof\nVegetables" BgColor="Green">
+      <Beans BgColor="SandyBrown" />
+      <Peas BgColor="LightGreen" />
+      <Lettuce BgColor="Lime" />
+    </Vegetables>
+    <Dessert Text="Dessert\nChoices">
+      <Tart FgColor="Blue" />
+      <Cookie FgColor="Brown" />
+      <Cake FgColor="Green" />
+    </Dessert>
+    <Fruit BgColor="Orange" IsHidden="true">
+      <Banana />
+      <Peach />
+      <Frog />
+    </Fruit>
+  </Food>
+  <Sports Text="Various\n\nSports" BgColor="LightBlue" FgColor="Blue">
+    <Volleyball />
+    <Baseball />
+  </Sports>
+</Items>

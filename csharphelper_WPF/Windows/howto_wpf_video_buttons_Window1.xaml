@@ -1,0 +1,161 @@
+<Window x:Class="csharphelper.Windows_Cs.howto_wpf_video_buttons_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="howto_wpf_video_buttons"
+    Height="90" Width="465"
+    Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ButtonTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Orientation="Horizontal"
+        HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Width" Value="40"/>
+                <Setter Property="Height" Value="40"/>
+            </Style>
+        </StackPanel.Resources>
+
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnPlay" Click="btn_Click">
+            <Path Stroke="DarkBlue" StrokeLineJoin="Round"
+                StrokeThickness="2" Fill="White"
+                Data="M 0,0 L 12,7 0,14 Z"/>
+        </Button>
+
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnFaster" Click="btn_Click">
+            <Grid>
+                <Path Stroke="DarkBlue" StrokeLineJoin="Round"
+                    StrokeThickness="2" Fill="White"
+                    Data="M 0,0 L 12,7 0,14 Z">
+                    <Path.RenderTransform>
+                        <TranslateTransform X="-2"/>
+                    </Path.RenderTransform>
+                </Path>
+                <Path Stroke="DarkBlue" StrokeLineJoin="Round"
+                    StrokeThickness="2" Fill="White"
+                    Data="M 0,0 L 12,7 0,14 Z">
+                    <Path.RenderTransform>
+                        <TranslateTransform X="5"/>
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
+        </Button>
+        
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnNext" Click="btn_Click">
+            <Grid>
+                <Path Stroke="DarkBlue" StrokeLineJoin="Round"
+                    StrokeThickness="2" Fill="White"
+                    Data="M 0,0 L 12,7 0,14 Z">
+                    <Path.RenderTransform>
+                        <TranslateTransform X="-2"/>
+                    </Path.RenderTransform>
+                </Path>
+                <Rectangle Width="6" Height="14"
+                    Stroke="DarkBlue" StrokeThickness="2" StrokeLineJoin="Round"
+                    Fill="White">
+                    <Rectangle.RenderTransform>
+                        <TranslateTransform X="5"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+            </Grid>
+        </Button>
+
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnStop" Click="btn_Click">
+            <Rectangle Width="14" Height="14"
+                Stroke="DarkBlue" StrokeThickness="2" StrokeLineJoin="Round"
+                Fill="White"/>
+        </Button>
+
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnPause" Click="btn_Click">
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Width="7" Height="14"
+                    HorizontalAlignment="Left"
+                    Stroke="DarkBlue" StrokeThickness="2" StrokeLineJoin="Round"
+                    Fill="White"/>
+                <Rectangle Width="7" Height="14"
+                    HorizontalAlignment="Left"
+                    Stroke="DarkBlue" StrokeThickness="2" StrokeLineJoin="Round"
+                    Fill="White"/>
+            </StackPanel>
+        </Button>
+        
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnRestart" Click="btn_Click">
+            <Grid>
+                <Path Stroke="DarkBlue" Width="30" Height="30" StrokeLineJoin="Round"
+                    StrokeThickness="2" Fill="White"
+                    HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Data="
+                        M 15,7 
+                        A 8,8 270,1,0 23,15
+                        L 19,15
+                        A 4,4 270,1,1 15,11
+                        L 15,15 21,9 15,3 Z 
+                        "/>
+            </Grid>
+        </Button>
+
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnBack" Click="btn_Click">
+            <Path Stroke="DarkBlue" StrokeLineJoin="Round"
+                StrokeThickness="2" Fill="White"
+                Data="M 12,0 L 0,7 12,14 Z"/>
+        </Button>
+
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnSlower" Click="btn_Click">
+            <Grid>
+                <Path Stroke="DarkBlue" StrokeLineJoin="Round"
+                    StrokeThickness="2" Fill="White"
+                    Data="M 14,0 L 0,7 14,14 Z">
+                    <Path.RenderTransform>
+                        <TranslateTransform X="2"/>
+                    </Path.RenderTransform>
+                </Path>
+                <Path Stroke="DarkBlue" StrokeLineJoin="Round"
+                    StrokeThickness="2" Fill="White"
+                    Data="M 12,0 L 0,7 12,14 Z">
+                    <Path.RenderTransform>
+                        <TranslateTransform X="-4"/>
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
+        </Button>
+
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnPrevious" Click="btn_Click">
+            <Grid>
+                <Path Stroke="DarkBlue" StrokeLineJoin="Round"
+                    StrokeThickness="2" Fill="White"
+                    Data="M 14,0 L 0,7 14,14 Z">
+                    <Path.RenderTransform>
+                        <TranslateTransform X="2"/>
+                    </Path.RenderTransform>
+                </Path>
+                <Rectangle Width="6" Height="14"
+                    Stroke="DarkBlue" StrokeThickness="2" StrokeLineJoin="Round"
+                    Fill="White">
+                    <Rectangle.RenderTransform>
+                        <TranslateTransform X="-6"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+            </Grid>
+        </Button>
+
+        <Button Template="{StaticResource BubbleButtonTemplate}"
+            Name="btnTest" Click="btn_Click">
+            <Label Content="Test" Foreground="White"
+                FontWeight="Bold" FontSize="11" />
+        </Button>
+    </StackPanel>
+</Window>

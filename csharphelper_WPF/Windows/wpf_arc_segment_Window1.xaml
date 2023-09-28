@@ -1,0 +1,47 @@
+<Window x:Class="csharphelper.Windows_Cs.wpf_arc_segment_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="wpf_arc_segment"
+    Height="300" Width="300">
+    <Grid>
+        <Canvas>
+            <!-- Draw the ellipses that itersect the two points. -->
+            <Ellipse Canvas.Left="60" Canvas.Top="30"
+                Width="180" Height="140"
+                Stroke="LightBlue" StrokeThickness="6" />
+            <Ellipse Canvas.Left="20" Canvas.Top="103"
+                Width="180" Height="140"
+                Stroke="Pink" StrokeThickness="6" />
+
+            <!-- Draw the arc. -->
+            <Path Stroke="Black" StrokeThickness="3" StrokeDashArray="5,5">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigureCollection>
+                                <PathFigure StartPoint="62,114">
+                                    <PathFigure.Segments>
+                                        <PathSegmentCollection>
+                                            <ArcSegment Size="90,70" RotationAngle="0"
+                                                IsLargeArc="True"
+                                                SweepDirection="Clockwise"
+                                                Point="198,159" />
+                                        </PathSegmentCollection>
+                                    </PathFigure.Segments>
+                                </PathFigure>
+                            </PathFigureCollection>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+
+            <!-- Draw the end points. -->
+            <Ellipse Canvas.Left="57" Canvas.Top="109"
+                Width="10" Height="10"
+                Fill="Blue" />
+            <Ellipse Canvas.Left="192" Canvas.Top="153"
+                Width="10" Height="10"
+                Fill="Red" />
+        </Canvas>
+    </Grid>
+</Window>

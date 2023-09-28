@@ -1,0 +1,46 @@
+<Window x:Class="csharphelper.Windows_Cs.howto_wpf_number_icons_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="howto_wpf_number_icons"
+    Height="300" Width="330"
+    MinWidth="330" MinHeight="300">
+    <Grid Name="grdMain">
+        <Label Height="28" HorizontalAlignment="Left" Margin="12,5.52,0,0" Name="label2" VerticalAlignment="Top" Width="63">Width:</Label>
+        <TextBox Height="23" Margin="81,7.52,99,0" Name="txtWidth" VerticalAlignment="Top" TextChanged="txtWidth_TextChanged">128</TextBox>
+        <Label Height="28" HorizontalAlignment="Left" Margin="12,34.52,0,0" Name="label3" VerticalAlignment="Top" Width="63">Height:</Label>
+        <TextBox Height="23" Margin="81,36.52,99,0" Name="txtHeight" VerticalAlignment="Top" TextChanged="txtHeight_TextChanged">128</TextBox>
+        <Label Height="28" HorizontalAlignment="Left" Margin="12,64,0,0" Name="label4" VerticalAlignment="Top" Width="63">Font Size:</Label>
+        <TextBox Height="23" Margin="81,66,99,0" Name="txtFontSize" VerticalAlignment="Top" TextChanged="txtFontSize_TextChanged">80</TextBox>
+
+        <Label Height="28" HorizontalAlignment="Left" Margin="12,93,0,0" Name="label1" VerticalAlignment="Top" Width="63">Text:</Label>
+        <TextBox Height="23" Margin="81,95,99,0" Name="txtText" VerticalAlignment="Top" TextChanged="txtText_TextChanged">1</TextBox>
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,93,18,0" Name="btnCapture" VerticalAlignment="Top" Width="75" Click="btnCapture_Click" IsDefault="True">Capture</Button>
+
+        <Grid Margin="12,127,0,0" Name="grdText"
+            HorizontalAlignment="Left"
+            Width="128" Height="128" VerticalAlignment="Top">
+            <Rectangle Margin="0" RadiusX="20" RadiusY="20" Stroke="LightGreen">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="Green" Offset="1" />
+                        <GradientStop Color="LightGreen" Offset="0" />
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+                <Rectangle.BitmapEffect>
+                    <BitmapEffectGroup>
+                        <BevelBitmapEffect EdgeProfile="BulgedUp" />
+                    </BitmapEffectGroup>
+                </Rectangle.BitmapEffect>
+            </Rectangle>
+            <TextBlock Foreground="LightGreen" Margin="0"
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock.BitmapEffect>
+                    <BevelBitmapEffect />
+                </TextBlock.BitmapEffect>
+                <Run Name="runText"
+                    FontFamily="Arial Rounded MT" FontStyle="Normal"
+                    FontSize="80">1</Run>
+            </TextBlock>
+        </Grid>
+    </Grid>
+</Window>

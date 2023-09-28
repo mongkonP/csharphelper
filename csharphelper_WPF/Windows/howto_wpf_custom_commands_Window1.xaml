@@ -1,0 +1,114 @@
+<Window x:Class="csharphelper.Windows_Cs.howto_wpf_custom_commands_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="howto_wpf_custom_commands"
+    Width="350"
+    SizeToContent="Height" Loaded="Window_Loaded"
+    Background="LightBlue" Foreground="Blue">
+
+    <!-- Either use code to bind the commands or use the following. -->
+    <Window.CommandBindings>
+        <CommandBinding
+            Command="ApplicationCommands.Open"
+            Executed="OpenBinding_Executed"
+            CanExecute="OpenBinding_CanExecute"/>
+    </Window.CommandBindings>
+    <DockPanel LastChildFill="True">
+        <DockPanel.Resources>
+            <Style TargetType="MenuItem">
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Width" Value="120"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Foreground" Value="Blue"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="CheckBox">
+                <Setter Property="Foreground" Value="Blue"/>
+            </Style>
+        </DockPanel.Resources>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Document">
+                <MenuItem Header="New" Command="ApplicationCommands.New"/>
+                <MenuItem Header="Open" Command="ApplicationCommands.Open"/>
+                <!--<MenuItem Header="Change Foreground" Command="local:MyCommands.ChangeForeground"/>-->
+                <!--<MenuItem Header="Change Background" Command="local:MyCommands.ChangeBackground"/>-->
+                <MenuItem Header="Change Foreground" Name="mnuChangeForeground"/>
+                <MenuItem Header="Change Background" Name="mnuChangeBackground"/>
+            </MenuItem>
+        </Menu>
+        <Grid Name="grdMain" Margin="10" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0"
+                Content="New Document" Command="ApplicationCommands.New"/>
+            <Button Grid.Row="1" Grid.Column="0"
+                Content="Make New" Command="ApplicationCommands.New"/>
+            <CheckBox Grid.Row="2" Grid.Column="0"
+                Name="chkAllowNew" Content="Allow New"
+                HorizontalAlignment="Center"/>
+
+            <Button Grid.Row="0" Grid.Column="1"
+                Content="Open Document" Command="ApplicationCommands.Open"/>
+            <Button Grid.Row="1" Grid.Column="1"
+                Content="Open" Command="ApplicationCommands.Open"/>
+            <CheckBox Grid.Row="2" Grid.Column="1"
+                Name="chkAllowOpen" Content="Allow Open"
+                HorizontalAlignment="Center"/>
+
+            <!--<Button Grid.Row="3" Grid.Column="0"
+                Content="Change Foreground"
+                Command="local:MyCommands.ChangeForeground"/>
+            <Button Grid.Row="4" Grid.Column="0"
+                Content="Foreground"
+                Command="local:MyCommands.ChangeForeground"/>-->
+            <Button Grid.Row="3" Grid.Column="0" Margin="0,40,0,0"
+                Content="Change Foreground"
+                Name="btnChangeForeground"/>
+            <Button Grid.Row="4" Grid.Column="0"
+                Content="Foreground"
+                Name="btnForeground"/>
+            <CheckBox Grid.Row="5" Grid.Column="0"
+                Name="chkAllowForeground" Content="Allow Foreground"
+                HorizontalAlignment="Center"/>
+
+            <!--<Button Grid.Row="3" Grid.Column="1"
+                Content="Execute Plan"
+                Command="local:MyCommands.ChangeBackground"/>
+            <Button Grid.Row="4" Grid.Column="1"
+                Content="Execute"
+                Command="local:MyCommands.ChangeBackground"/>-->
+            <Button Grid.Row="3" Grid.Column="1" Margin="0,40,0,0"
+                Content="Change Background"
+                Name="btnChangeBackground"/>
+            <Button Grid.Row="4" Grid.Column="1"
+                Content="Background"
+                Name="btnBackground"/>
+            <CheckBox Grid.Row="5" Grid.Column="1"
+                Name="chkAllowBackground" Content="Allow Background"
+                HorizontalAlignment="Center"/>
+        </Grid>
+    </DockPanel>
+</Window>

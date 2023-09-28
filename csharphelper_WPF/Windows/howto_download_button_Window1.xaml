@@ -1,0 +1,28 @@
+<Window x:Class="csharphelper.Windows_Cs.howto_download_button_Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="howto_download_button" Height="107" Width="140" Loaded="Window_Loaded"
+    WindowStyle="ToolWindow">
+    <Grid Background="Transparent" Name="grdMain">
+        <!-- The button's background -->
+        <Ellipse Margin="5" StrokeThickness="5">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="LightGreen" Offset="0"/>
+                    <GradientStop Color="#FF00C000" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <!-- Text -->
+        <TextBlock FontFamily="Arial Rounded MT" FontSize="20"
+         FontWeight="Bold" Foreground="Black"
+         Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center"
+         TextWrapping="Wrap">
+            Download
+        </TextBlock>
+        <!-- Highlight -->
+        <Ellipse VerticalAlignment="Top" Height="30" Margin="20,8,20,0"
+            Fill="White" Opacity="0.5">
+        </Ellipse>
+    </Grid>
+</Window>
